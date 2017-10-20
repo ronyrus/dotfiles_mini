@@ -49,7 +49,7 @@ fi
 PS1='\n[\[\033[${USERNAME_COLOR}\]\u\[\033[00m\]\[\033[${AT_COLOR}\]@\[\033[00m\]\[\033[${HOST_COLOR}\]\h\[\033[00m\]][\[\033[${PWD_COLOR}\]\w\[\033[00m\]]\n>> ' 
 
 case $(uname -s) in
-  Darwin|FreeBSD) ;;
+  Darwin|FreeBSD)
     export CLICOLOR=1
     export LSCOLORS=exgxcxdxbxegedabagacad
   NetBSD|OpenBSD) ;;
