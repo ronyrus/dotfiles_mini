@@ -23,6 +23,11 @@ export DIFFPROG="gvim -df +0 -s `echo ~/.vim/diftop.vim`"
 #export DIFFPROG='xxdiff'
 export PYTHONPATH=${PYTHONPATH}:$HOME/Work/ios_team/:$HOME/Work/:$HOME/Work/tools/python
 
+if [ -f /etc/dogtag ]; then
+  export SLOTS=/sys/devices/platform/bone_capemgr/slots
+  export PINS=/sys/kernel/debug/pinctrl/44e10800.pinmux
+fi
+
 # Override /etc/X11/app-defaults/XTerm* settings
 case $(uname -s) in
   Darwin|FreeBSD) ;;
