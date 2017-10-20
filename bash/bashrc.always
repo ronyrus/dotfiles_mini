@@ -146,7 +146,7 @@ alias gdt='git difftool'
 # alias gsth='git stash'
 # alias gps='git push'
 # alias gpl='git pull'
-alias gist = 'git log --pretty=format:"%h %ad | %s%d [%an]" --graph --date=short'
+alias gist='git log --pretty=format:"%h %ad | %s%d [%an]" --graph --date=short'
 
 alias upmaster='git co master && git pull upstream master && git push origin master'
 
