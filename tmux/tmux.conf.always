@@ -1,0 +1,263 @@
+# vim: foldmethod=marker
+
+
+# change the prefix key
+set -g prefix "`"
+unbind-key C-b
+bind-key "`" send-prefix
+
+# This is usefull for tmux inside tmux
+#bind C-a send-prefix
+
+# Set that stupid Esc-Wait off, so VI works again
+set-option -sg  escape-time 0
+
+
+###########################################################################
+# Scrollback / pastebuffer
+
+# Vim-style copy/paste
+# unbind [
+# bind y copy-mode
+# unbind p
+# bind p paste-buffer
+# bind -t vi-copy v begin-selection
+# bind -t vi-copy y copy-selection
+# bind -t vi-copy Escape cancel
+
+################################################################################
+# Copy Past on Mac handling
+#  from: http://evertpot.com/osx-tmux-vim-copy-paste-clipboard/
+################################################################################
+
+# MAC copy-past problem (for some Mac OS X version it just works
+if-shell "echo $(uname) | grep -q Darwin" 'set-option -g default-command "reattach-to-user-namespace -l bash"'
+
+# Use vim keybindings in copy mode
+set -g mode-keys vi
+# Use emacs keybindings in command line mode
+set -g status-keys emacs
+
+# Setup 'v' to begin selection as in Vim and 'y' to copy
+# bind-key -t vi-copy v begin-selection
+# bind-key -Tcopy-mode-vi 'y' send -X copy-pipe "reattach-to-user-namespace pbcopy"
+
+# Update default binding of `Enter` to also use copy-pipe
+unbind -Tcopy-mode-vi 'Enter'
+bind-key -Tcopy-mode-vi 'Enter' send -X copy-pipe-and-cancel "/usr/local/bin/reattach-to-user-namespace /usr/bin/pbcopy"
+# bind-key -Tcopy-mode-vi 'Enter' send -X copy-pipe "reattach-to-user-namespace pbcopy"
+
+#Bind ']' to use pbpaste
+# bind ] run "reattach-to-user-namespace pbpaste | tmux load-buffer - && tmux paste-buffer"
+
+bind -T copy-mode-vi Escape send -X cancel
+
+set -g default-terminal "screen-256color"
+set -g automatic-rename on
+set-option -g display-time 4000
+set -g history-limit 999000
+
+set-option -g word-separators " -_@/\\"
+
+# start numbering windows and panes from 1 and not from 0
+set -g base-index 1
+setw -g pane-base-index 1
+
+# focus events enabled for terminals that support them
+set -g focus-events on
+
+# pass through xterm keys
+set -g xterm-keys on
+
+bind-key r source-file ~/.tmux.conf\; display "Reloaded!"
+
+bind-key -n M-c   command-prompt -p "tmux:"
+bind-key -n M-m   command-prompt -p "Man:" "split-window 'man %%'"
+
+# PageUp enters copy-mode and scrolls one page
+unbind-key -n ppage
+bind-key -n S-ppage copy-mode -u
+
+# switch tabs (windows)
+bind-key -n C-ppage previous-window
+bind-key -n M-ppage previous-window
+bind-key -n S-left previous-window
+
+bind-key -n C-npage next-window
+bind-key -n M-npage next-window
+bind-key -n S-right next-window
+
+# last two windows switch
+bind-key -n M-Enter last-window
+
+bind-key -n M-left	resize-pane -L 1
+bind-key -n M-right  	resize-pane -R 1
+bind-key -n M-up	resize-pane -U 1
+bind-key -n M-down	resize-pane -D 1
+
+# pane
+bind-key -n M-l select-pane -R
+bind-key -n M-h select-pane -L
+bind-key -n M-k select-pane -U
+bind-key -n M-j select-pane -D
+
+# New window with default path set to last path
+bind '"' split-window -c "#{pane_current_path}"
+bind % split-window -h -c "#{pane_current_path}"
+bind c new-window -c "#{pane_current_path}"
+
+################################################################################
+# Mouse mode
+
+# set -g mode-mouse on
+# set -g mouse-resize-pane on
+# set -g mouse-select-pane on
+# set -g mouse-select-window on
+#
+# # Toggle mouse on
+# bind m \
+#     set -g mode-mouse on \;\
+#     set -g mouse-resize-pane on \;\
+#     set -g mouse-select-pane on \;\
+#     set -g mouse-select-window on \;\
+#     display 'Mouse: ON'
+#
+# # Toggle mouse off
+# bind M \
+#     set -g mode-mouse off \;\
+#     set -g mouse-resize-pane off \;\
+#     set -g mouse-select-pane off \;\
+#     set -g mouse-select-window off \;\
+#     display 'Mouse: OFF'
+
+################################################################################
+# statusbar
+
+set-option -g   status-interval 5
+set-option -g   status-justify centre
+set-option -g   status-left-length 15
+set-option -g   status-left ' #h |'
+set-option -g   status-right ' | %A %Y-%m-%d %H:%M #[default]'
+
+
+
+
+###########################################################################
+# Color scheme (Solarized light)
+
+### default statusbar colors
+##set-option -g status-bg colour231 #base2
+##set-option -g status-fg colour130 #yellow
+##set-option -g status-attr default
+##
+### default window title colors
+##set-window-option -g window-status-fg colour180 #base00
+##set-window-option -g window-status-bg default
+##
+### active window title colors
+##set-window-option -g window-status-current-fg colour196 #orange
+##set-window-option -g window-status-current-bg default
+##
+### pane border
+##set-option -g pane-active-border-fg black
+##set-option -g pane-active-border-bg white
+##set-option -g pane-border-fg brightcyan
+##set-option -g pane-border-bg default
+##
+### message text
+##set-option -g message-bg colour231 #base2
+##set-option -g message-fg colour196 #orange
+##
+### pane number display
+##set-option -g display-panes-active-colour colour20 #blue
+##set-option -g display-panes-colour colour196 #orange
+##
+### clock
+##set-window-option -g clock-mode-colour colour40 #green
+
+###########################################################################
+# Color scheme (Solarized Dark)
+
+# default statusbar colors
+set-option -g status-bg brightgreen
+set-option -g status-fg white
+set-option -g status-attr default
+
+# default window title colors
+set-window-option -g window-status-fg brightcyan
+set-window-option -g window-status-bg default
+#set-window-option -g window-status-attr dim
+
+# active window title colors
+set-window-option -g window-status-current-fg white
+set-window-option -g window-status-current-bg blue
+#set-window-option -g window-status-current-attr bright
+
+# pane border
+set-option -g pane-border-fg brightgreen
+set-option -g pane-active-border-fg red
+
+# message text
+set-option -g message-bg black
+set-option -g message-fg red
+
+# pane number display
+set-option -g display-panes-active-colour red
+set-option -g display-panes-colour white
+
+# clock
+set-window-option -g clock-mode-colour cyan
+
+###########################################################################
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+################################################################################
+# COLOUR
+################################################################################
+
+# # default statusbar colors
+# set-option -g status-bg colour235 #base02
+# set-option -g status-fg colour136 #yellow
+# set-option -g status-attr default
+#
+# # default window title colors
+# set-window-option -g window-status-fg colour244
+# set-window-option -g window-status-bg default
+# #set-window-option -g window-status-attr dim
+#
+# # active window title colors
+# set-window-option -g window-status-current-fg colour166 #orange
+# set-window-option -g window-status-current-bg default
+# #set-window-option -g window-status-current-attr bright
+#
+# # pane border
+# set-option -g pane-border-fg colour235 #base02
+# set-option -g pane-active-border-fg colour240 #base01
+#
+# # message text
+# set-option -g message-bg colour235 #base02
+# set-option -g message-fg colour166 #orange
+#
+# # pane number display
+# set-option -g display-panes-active-colour colour33 #blue
+# set-option -g display-panes-colour colour166 #orange
+#
+# # clock
+# set-window-option -g clock-mode-colour colour64 #green
+
+

@@ -1,0 +1,55 @@
+[include]
+    path = ~/.gitconfig.local
+
+[color]
+	ui = auto
+
+[difftool]
+	prompt = false
+
+[mergetool]
+	prompt = false
+
+[core]
+  editor = gvim -f
+	excludesfile = /Users/ronyk/.gitignore_global
+
+[diff]
+    #tool = Kaleidoscope
+    #tool = bc3
+    tool = bcomp
+
+[difftool "bcomp"]
+	cmd = /usr/local/bin/bcomp --partial-changeset --relative-path  \"$LOCAL\" \"$REMOTE\"
+
+[difftool "Kaleidoscope"]
+	cmd = /usr/local/bin/ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
+
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+
+[difftool "mvimdiff"]
+    cmd = mvim -f -d \"$LOCAL\" \"$REMOTE\"
+
+[merge]
+    tool = bcomp
+    #tool = bc3
+    #tool = Kaleidoscope
+
+[mergetool]
+	prompt = false
+	bc3 = trustExitCode
+
+[mergetool "bcomp"]
+	cmd = /usr/local/bin/bcomp \"$REMOTE\" \"$LOCAL\" \"$BASE\" \"$MERGED\"
+	trustexitcode = true
+
+[mergetool "Kaleidoscope"]
+	cmd = /usr/local/bin/ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
+	trustexitcode = true
+
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+

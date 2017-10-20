@@ -1,0 +1,207 @@
+# If not running interactively, don't do anything
+[ -z "$PS1" ] && return
+
+# don't put duplicate lines or lines starting with space in the history.
+# See bash(1) for more options
+HISTCONTROL=ignoreboth
+
+# append to the history file, don't overwrite it
+shopt -s histappend
+
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+HISTSIZE=1000
+HISTFILESIZE=2000
+
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+
+export PATH=/usr/local/bin:$HOME/bin:$PATH
+export TERM=xterm-256color
+export EDITOR='gvim -f'
+export DIFFPROG="gvim -df +0 -s `echo ~/.vim/diftop.vim`"
+#export DIFFPROG='xxdiff'
+export PYTHONPATH=${PYTHONPATH}:$HOME/Work/ios_team/:$HOME/Work/:$HOME/Work/tools/python
+
+# Override /etc/X11/app-defaults/XTerm* settings
+case $(uname -s) in
+  Darwin|FreeBSD) ;;
+  NetBSD|OpenBSD) ;;
+  Linux)
+    if [ -f ~/.Xresources ] ; then
+      xrdb -remove
+      xrdb -merge ~/.Xresources
+    fi
+  ;;
+esac
+
+# normal username color is green
+USERNAME_COLOR='00;32m'
+AT_COLOR='01;33m'
+HOST_COLOR='01;00m'
+PWD_COLOR='01;34m'
+
+# root username color is red
+if [ ${UID} -eq 0 ]; then
+	USERNAME_COLOR='01;31m'
+fi
+
+PS1='\n[\[\033[${USERNAME_COLOR}\]\u\[\033[00m\]\[\033[${AT_COLOR}\]@\[\033[00m\]\[\033[${HOST_COLOR}\]\h\[\033[00m\]][\[\033[${PWD_COLOR}\]\w\[\033[00m\]]\n>> ' 
+
+case $(uname -s) in
+  Darwin|FreeBSD) ;;
+    export CLICOLOR=1
+    export LSCOLORS=exgxcxdxbxegedabagacad
+  NetBSD|OpenBSD) ;;
+  Linux) ;;
+esac
+
+# if [ -f ~/.bashrc_typos_aliases_and_functions ]; then
+#   source ~/.bashrc_typos_aliases_and_functions
+# fi
+
+# if [ -f ~/.bashrc_colors_and_ps1 ]; then
+#   source ~/.bashrc_colors_and_ps1
+# fi
+
+# # Put secret configuration settings in ~/.secrets
+# if [ -f ~/.secrets ]; then
+#   source ~/.secrets
+# fi
+
+# bash_completion
+case $(uname -s) in
+  Darwin|FreeBSD)
+    if [ -f $(brew --prefix)/etc/bash_completion ]; then
+      . $(brew --prefix)/etc/bash_completion
+    fi
+    ;;
+  Linux)
+    if ! shopt -oq posix; then
+        if [ -f /usr/share/bash-completion/bash_completion ]; then
+            . /usr/share/bash-completion/bash_completion
+        elif [ -f /etc/bash_completion ]; then
+            . /etc/bash_completion
+        fi
+    fi
+    ;;
+esac
+
+#-------------------------------------------------------------------------------
+# typo
+#-------------------------------------------------------------------------------
+alias dc="cd"
+alias sl="ls"
+
+alias ckae=cake
+alias caek=cake
+
+alias amke=make
+
+#-------------------------------------------------------------------------------
+# aliases
+#-------------------------------------------------------------------------------
+alias g='gvim'
+
+# Set appropriate ls alias
+case $(uname -s) in
+  Darwin|FreeBSD)
+    alias ls="ls -hFG"
+  ;;
+  Linux)
+    alias ls="ls --color=always -hF"
+  ;;
+  NetBSD|OpenBSD)
+    alias ls="ls -hF"
+  ;;
+esac
+
+alias ll='ls -l'
+alias la='ls -al'
+
+alias q="cd .."
+alias qq="cd ../.."
+alias qqq="cd ../../.."
+
+alias work="cd ~/Work"
+alias iwork="cd ~/Work/iphone"
+alias devs="cd ~/Developer/sources/"
+
+alias ks='killall ssh'
+alias psg='ps -eflw | grep'
+
+# This is for MAC OS
+alias octave="/Applications/Octave.app/Contents/Resources/bin/octave"
+alias gnuplot="/Applications/Gnuplot.app/Contents/Resources/bin/gnuplot"
+
+alias gs='git status'
+alias ga='git add'
+alias gc='git checkout'
+alias gci='git commit'
+alias gdi='git diff'
+alias gdt='git difftool'
+# alias gl='git log'
+# alias gb='git branch'
+# alias gsth='git stash'
+# alias gps='git push'
+# alias gpl='git pull'
+alias gist = 'git log --pretty=format:"%h %ad | %s%d [%an]" --graph --date=short'
+
+alias upmaster='git co master && git pull upstream master && git push origin master'
+
+#
+# functions
+#------------
+ff()
+{
+    if [ -z "$1" ]; then
+	return;
+    fi
+    find . -name "*$1*";
+}
+
+rgc () { /bin/grep --color=always -in -B1 $1 `jpwdroot`/build/rg_config.* ; }
+
+function figr()
+{
+  if [ 0 == $# ]; then
+    echo "$0 <regexp> <grep opt> <ext>>"
+      exit
+      fi
+
+      EXCLUDE_CVS="--exclude=CVS"
+      EXCLUDE_CTAGS="--exclude=tags"
+      EXCLUDE_CSCOPE="--exclude=cscope*"
+      EXC_OPT="${EXCLUDE_CVS} ${EXCLUDE_CTAGS} ${EXCLUDE_CSCOPE}"
+
+      INCLUDE_CH="--include=*.[ch]"
+      INCLUDE_MAK="--include=*.mak"
+      INCLUDE_MAKEFILE="--include=Makefile*"
+      INC_OPT="${INCLUDE_CH} ${INCLUDE_MAK} ${INCLUDE_MAKEFILE}"
+
+      GREP_OPT="-ri"
+
+      REGEXP=$1
+      if (( 2 <= $# )); then
+        GREP_OPT=$2
+          fi
+          if (( 3 <= $# )); then
+            EXT=$3
+              fi
+
+              if [ -n EXT ]; then
+                INC_OPT="--include=*.${EXT}"
+                  fi
+
+#echo "find $DIR $MAX_DEPTH -name \"*$EXT\" | xargs grep -n $GREP_OPT \"$REGEXP\" | hil \"$REGEXP\""
+#find $DIR $MAX_DEPTH -name "*$EXT" | xargs grep -n $GREP_OPT "$REGEXP" | hil "$REGEXP"
+
+#echo "grep -n --include \"*$EXT\" $EXCLUDE_CTAGS $EXCLUDE_CSCOPE $GREP_OPT \"$REGEXP\" . | hil \"$REGEXP\""
+#      grep -n --include "*$EXT" $EXCLUDE_CTAGS $EXCLUDE_CSCOPE $GREP_OPT $GREP_OPT "$REGEXP" . | hil "$REGEXP"
+
+                  echo  grep -n ${INC_OPT} ${EXC_OPT} ${GREP_OPT} \"$REGEXP\" . | hil \"$REGEXP\"
+                  grep -n ${INC_OPT} ${EXC_OPT} ${GREP_OPT} "$REGEXP" . | hil "$REGEXP"
+
+#  grep -rni --include=*.[chi] --include=*.mak --include=Makefile --color=always "$@" * | hil
+}
+

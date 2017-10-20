@@ -1,0 +1,30 @@
+# keys
+# C-g: "make config DIST="
+#
+# \C - ctrl
+# \M - meta
+# \e - ESC (which is like Meta)
+
+# Ctrl + Alt + l --> append " | less " to the end of line
+#"\e\C-l":"\C-e | less\C-m"
+"\e\C-l":"\C-e | less"
+
+# Ctrl + Alt + s --> add "sudo" to the beginning of the line
+"\C-\M-d":"\C-asudo \C-e"
+# "\e\C-d":"\C-@ \C-a sudo "
+
+# Ctrl + Alt + g --> append " | grep " to the end of line
+"\e\C-g":"\C-e | grep --color "
+
+# settings
+set completion-ignore-case On
+
+# 1-tab to partial expantion + show completion options
+set show-all-if-ambiguous on
+
+# stop echo of "^C" into the terminal
+set echo-control-characters off
+
+# up/down perform search instead of just prev/next command
+"\e[A":history-search-backward
+"\e[B":history-search-forward
