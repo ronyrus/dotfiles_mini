@@ -23,9 +23,20 @@ export DIFFPROG="gvim -df +0 -s `echo ~/.vim/diftop.vim`"
 #export DIFFPROG='xxdiff'
 export PYTHONPATH=${PYTHONPATH}:$HOME/Work/ios_team/:$HOME/Work/:$HOME/Work/tools/python
 
+# BeagleBone-Black specific stuff
 if [ -f /etc/dogtag ]; then
   export SLOTS=/sys/devices/platform/bone_capemgr/slots
   export PINS=/sys/kernel/debug/pinctrl/44e10800.pinmux
+
+
+  function remove_slot {
+      sudo sh -c "echo -$1 > $SLOTS"
+  }
+
+  alias pru0_off="sudo sh -c 'echo 4a334000.pru0 > /sys/bus/platform/drivers/pru-rproc/unbind'"
+  alias pru1_off="sudo sh -c 'echo 4a338000.pru1 > /sys/bus/platform/drivers/pru-rproc/unbind'"
+  alias pru0_on="sudo sh -c 'echo 4a334000.pru0 > /sys/bus/platform/drivers/pru-rproc/bind'"
+  alias pru1_on="sudo sh -c 'echo 4a338000.pru1 > /sys/bus/platform/drivers/pru-rproc/bind'"
 fi
 
 # Override /etc/X11/app-defaults/XTerm* settings
