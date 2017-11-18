@@ -1,1 +1,6 @@
 *.pyc
+vim/vim.always/backups
+vim/vim.always/autoload
+vim/vim.always/bundle
+vim/vim.always/plugged
+vim/vim.always/bundle_old

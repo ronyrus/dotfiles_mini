@@ -1,0 +1,1 @@
+map <D-\> gcc<Esc>

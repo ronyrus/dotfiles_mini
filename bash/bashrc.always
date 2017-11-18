@@ -146,6 +146,7 @@ alias devs="cd ~/Developer/sources/"
 
 alias ks='killall ssh'
 alias psg='ps -eflw | grep'
+# alias gr='grep --color -rnsi'
 
 # This is for MAC OS
 alias octave="/Applications/Octave.app/Contents/Resources/bin/octave"
@@ -176,6 +177,8 @@ ff()
     fi
     find . -name "*$1*";
 }
+
+gr() { grep --color -rnsi $1 * ; }
 
 rgc () { /bin/grep --color=always -in -B1 $1 `jpwdroot`/build/rg_config.* ; }
 
@@ -222,3 +225,5 @@ function figr()
 #  grep -rni --include=*.[chi] --include=*.mak --include=Makefile --color=always "$@" * | hil
 }
 
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
