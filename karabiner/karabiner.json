@@ -54,6 +54,49 @@
                                 ]
                             }
                         ]
+                    },
+                    {
+                        "description": "010 Edit switch tabs with CTRL-PageUp/PageDown",
+                        "manipulators": [
+                            {
+                                "type": "basic",
+                                "from": {
+                                    "key_code": "page_down",
+                                    "modifiers": { "mandatory": ["control"] }
+                                },
+                                "to": [
+                                    {
+                                    "key_code": "close_bracket",
+                                    "modifiers": ["right_command", "right_shift"]
+                                    }
+                                ],
+                                "conditions": [
+                                    {
+                                    "type": "frontmost_application_if",
+                                    "bundle_identifiers": [ "^com.SweetScape.010Editor" ]
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "basic",
+                                "from": {
+                                    "key_code": "page_up",
+                                    "modifiers": { "mandatory": ["control"] }
+                                },
+                                "to": [
+                                    {
+                                    "key_code": "open_bracket",
+                                    "modifiers": ["right_command", "right_shift"]
+                                    }
+                                ],
+                                "conditions": [
+                                    {
+                                    "type": "frontmost_application_if",
+                                    "bundle_identifiers": [ "^com.SweetScape.010Editor" ]
+                                    }
+                                ]
+                            }
+                        ]
                     }
                 ]
             },
