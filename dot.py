@@ -14,6 +14,7 @@ import subprocess as sb
 system_str = platform.system()
 home_dir = os.path.expanduser('~')
 base_dir = os.path.dirname(os.path.abspath(__file__))
+dev_null = open(os.devnull, 'w')
 
 def is_mac():
     return 'Darwin' in system_str
