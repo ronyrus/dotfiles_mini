@@ -9,6 +9,7 @@ import shutil
 import stat
 import zipfile
 from cli import CommandLineApp, Argument, Command
+import subprocess as sb
 
 system_str = platform.system()
 home_dir = os.path.expanduser('~')
@@ -40,7 +41,7 @@ class DotManager(CommandLineApp):
     _verbosity = Argument('-v', '--verbose', action="count", help="Be more verbose")
 
     def __init__(self):
-        if self._verbosity > 1:
+        if self._verbosity >= 1:
             log.setLevel(logging.DEBUG)
 
 
@@ -80,8 +81,35 @@ class DotManager(CommandLineApp):
                 os.remove(target_file)
             os.symlink(source_file, target_file)
 
+    @Command
+    def fonts(self):
+        """ Install fonts """
+        fonts_source = os.path.join(base_dir, 'fonts')
 
+        if is_mac():
+            fonts_target = os.path.join(home_dir, 'Library', 'Fonts', 'dotfiles_fonts')
+        elif is_linux():
+            fonts_target = os.path.join(home_dir, '.fonts', 'dotfiles_fonts')
+        else:
+            log.error('platform is not supported')
+            raise
 
+        log.debug('linking fonts: %s --> %s', fonts_target, fonts_source)
+        if os.path.exists(fonts_target):
+            os.remove(fonts_target)
+        try:
+            parent_dir = os.path.dirname(fonts_target)
+            os.makedirs(parent_dir)
+        except OSError as e:
+            if e.errno == 17: # File exists
+                log.debug("dir [%s] already exists ..." % parent_dir)
+            else:
+                raise e
+        os.symlink(fonts_source, fonts_target)
+
+        if is_linux():
+            log.debug('updating font cache...')
+            sb.call(('fc-cache -fv %s' % fonts_target).split(), stdout=dev_null, stderr=dev_null)
 
 
 
