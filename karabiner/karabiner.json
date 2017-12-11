@@ -13,7 +13,7 @@
                 },
                 "rules": [
                     {
-                        "description": "Finder/Safari switch tabs with CTRL-PageUp/PageDown",
+                        "description": "Switch tabs with CTRL+PageUp/PageDown instead of CTRL+TAB",
                         "manipulators": [
                             {
                                 "type": "basic",
@@ -30,7 +30,7 @@
                                 "conditions": [
                                     {
                                     "type": "frontmost_application_if",
-                                    "bundle_identifiers": [ "^com.apple.finder", "^com.apple.Safari" ]
+                                    "bundle_identifiers": [ "^com.apple.finder", "^com.apple.Safari", "^com.adobe.Reader" ]
                                     }
                                 ]
                             },
@@ -49,7 +49,7 @@
                                 "conditions": [
                                     {
                                     "type": "frontmost_application_if",
-                                    "bundle_identifiers": [ "^com.apple.finder", "^com.apple.Safari" ]
+                                    "bundle_identifiers": [ "^com.apple.finder", "^com.apple.Safari", "^com.adobe.Reader" ]
                                     }
                                 ]
                             }
