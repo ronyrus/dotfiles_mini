@@ -33,7 +33,8 @@ if has("gui_running")
       " set guifont=Anonymice\ Powerline:h16
     elseif has('unix')
       " set guifont=PragmataPro:h18
-      set guifont=Anonymous\ Pro\ 12
+      set guifont=Monospace\ Regular\ 12
+      " set guifont=Anonymous\ Pro\ 12
       " set guifont=Anonymice\ Powerline\ 12
       " set guifont=Inconsolata-dz\ for\ Powerline\ Medium\ 12
       "set guifont=Bitstream\ Vera\ Sans\ Mono\ 12
