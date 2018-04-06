@@ -53,7 +53,7 @@ class DotManager(CommandLineApp):
     def link(self, lst, module):
         """ Link dot files into repository """
         log.info('linking dotfiles...')
-        modules = ['git', 'tmux', 'nix', 'bash', 'vim']
+        modules = ['git', 'tmux', 'nix', 'bash', 'vim', 'gdb', 'misc']
 
         if lst:
             print modules

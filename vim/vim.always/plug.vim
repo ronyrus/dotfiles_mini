@@ -14,6 +14,7 @@ Plug 'elzr/vim-json', { 'for': 'json'}
 Plug 'tpope/vim-git', { 'for': 'git' }
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 Plug 'vhda/verilog_systemverilog.vim'
+Plug 'alisdair/vim-armasm'
 
 " Fancy statusline
 Plug 'bling/vim-airline'
@@ -39,7 +40,8 @@ Plug 'jbnicolai/vim-AnsiEsc'
 Plug 'adelarsq/vim-matchit'
 Plug 'Raimondi/delimitMate'
 Plug 'easymotion/vim-easymotion'
-Plug 'tpope/vim-commentary'
+" Plug 'tpope/vim-commentary'
+Plug 'tomtom/tcomment_vim'
 
 Plug 'Valloric/YouCompleteMe'
 

@@ -8,50 +8,73 @@
         {
             "complex_modifications": {
                 "parameters": {
+                    "basic.simultaneous_threshold_milliseconds": 50,
                     "basic.to_delayed_action_delay_milliseconds": 500,
-                    "basic.to_if_alone_timeout_milliseconds": 1000
+                    "basic.to_if_alone_timeout_milliseconds": 1000,
+                    "basic.to_if_held_down_threshold_milliseconds": 500
                 },
                 "rules": [
                     {
                         "description": "Switch tabs with CTRL+PageUp/PageDown instead of CTRL+TAB",
                         "manipulators": [
                             {
-                                "type": "basic",
+                                "conditions": [
+                                    {
+                                        "bundle_identifiers": [
+                                            "^com.apple.finder",
+                                            "^com.apple.Safari",
+                                            "^com.adobe.Reader"
+                                        ],
+                                        "type": "frontmost_application_if"
+                                    }
+                                ],
                                 "from": {
                                     "key_code": "page_down",
-                                    "modifiers": { "mandatory": ["control"] }
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "control"
+                                        ]
+                                    }
                                 },
                                 "to": [
                                     {
-                                    "key_code": "tab",
-                                    "modifiers": ["right_control"]
+                                        "key_code": "tab",
+                                        "modifiers": [
+                                            "right_control"
+                                        ]
                                     }
                                 ],
-                                "conditions": [
-                                    {
-                                    "type": "frontmost_application_if",
-                                    "bundle_identifiers": [ "^com.apple.finder", "^com.apple.Safari", "^com.adobe.Reader" ]
-                                    }
-                                ]
+                                "type": "basic"
                             },
                             {
-                                "type": "basic",
+                                "conditions": [
+                                    {
+                                        "bundle_identifiers": [
+                                            "^com.apple.finder",
+                                            "^com.apple.Safari",
+                                            "^com.adobe.Reader"
+                                        ],
+                                        "type": "frontmost_application_if"
+                                    }
+                                ],
                                 "from": {
                                     "key_code": "page_up",
-                                    "modifiers": { "mandatory": ["control"] }
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "control"
+                                        ]
+                                    }
                                 },
                                 "to": [
                                     {
-                                    "key_code": "tab",
-                                    "modifiers": ["right_control", "right_shift"]
+                                        "key_code": "tab",
+                                        "modifiers": [
+                                            "right_control",
+                                            "right_shift"
+                                        ]
                                     }
                                 ],
-                                "conditions": [
-                                    {
-                                    "type": "frontmost_application_if",
-                                    "bundle_identifiers": [ "^com.apple.finder", "^com.apple.Safari", "^com.adobe.Reader" ]
-                                    }
-                                ]
+                                "type": "basic"
                             }
                         ]
                     },
@@ -59,42 +82,60 @@
                         "description": "010 Edit switch tabs with CTRL-PageUp/PageDown",
                         "manipulators": [
                             {
-                                "type": "basic",
+                                "conditions": [
+                                    {
+                                        "bundle_identifiers": [
+                                            "^com.SweetScape.010Editor"
+                                        ],
+                                        "type": "frontmost_application_if"
+                                    }
+                                ],
                                 "from": {
                                     "key_code": "page_down",
-                                    "modifiers": { "mandatory": ["control"] }
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "control"
+                                        ]
+                                    }
                                 },
                                 "to": [
                                     {
-                                    "key_code": "close_bracket",
-                                    "modifiers": ["right_command", "right_shift"]
+                                        "key_code": "close_bracket",
+                                        "modifiers": [
+                                            "right_command",
+                                            "right_shift"
+                                        ]
                                     }
                                 ],
-                                "conditions": [
-                                    {
-                                    "type": "frontmost_application_if",
-                                    "bundle_identifiers": [ "^com.SweetScape.010Editor" ]
-                                    }
-                                ]
+                                "type": "basic"
                             },
                             {
-                                "type": "basic",
+                                "conditions": [
+                                    {
+                                        "bundle_identifiers": [
+                                            "^com.SweetScape.010Editor"
+                                        ],
+                                        "type": "frontmost_application_if"
+                                    }
+                                ],
                                 "from": {
                                     "key_code": "page_up",
-                                    "modifiers": { "mandatory": ["control"] }
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "control"
+                                        ]
+                                    }
                                 },
                                 "to": [
                                     {
-                                    "key_code": "open_bracket",
-                                    "modifiers": ["right_command", "right_shift"]
+                                        "key_code": "open_bracket",
+                                        "modifiers": [
+                                            "right_command",
+                                            "right_shift"
+                                        ]
                                     }
                                 ],
-                                "conditions": [
-                                    {
-                                    "type": "frontmost_application_if",
-                                    "bundle_identifiers": [ "^com.SweetScape.010Editor" ]
-                                    }
-                                ]
+                                "type": "basic"
                             }
                         ]
                     }
@@ -135,7 +176,7 @@
                     },
                     "ignore": false,
                     "keyboard_type": 0,
-                    "manipulate_caps_lock_led": false,
+                    "manipulate_caps_lock_led": true,
                     "simple_modifications": [
                         {
                             "from": {
@@ -268,7 +309,7 @@
                         "key_code": "f9"
                     },
                     "to": {
-                        "key_code": "vk_consumer_next"
+                        "key_code": "f9"
                     }
                 },
                 {
@@ -298,6 +339,132 @@
             ],
             "name": "Default profile",
             "selected": true,
+            "simple_modifications": [
+                {
+                    "from": {
+                        "key_code": "right_option"
+                    },
+                    "to": {
+                        "key_code": "right_control"
+                    }
+                }
+            ],
+            "virtual_hid_keyboard": {
+                "caps_lock_delay_milliseconds": 0,
+                "keyboard_type": "ansi"
+            }
+        },
+        {
+            "complex_modifications": {
+                "parameters": {
+                    "basic.simultaneous_threshold_milliseconds": 50,
+                    "basic.to_delayed_action_delay_milliseconds": 500,
+                    "basic.to_if_alone_timeout_milliseconds": 1000,
+                    "basic.to_if_held_down_threshold_milliseconds": 500
+                },
+                "rules": []
+            },
+            "devices": [],
+            "fn_function_keys": [
+                {
+                    "from": {
+                        "key_code": "f1"
+                    },
+                    "to": {
+                        "consumer_key_code": "display_brightness_decrement"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f2"
+                    },
+                    "to": {
+                        "consumer_key_code": "display_brightness_increment"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f3"
+                    },
+                    "to": {
+                        "key_code": "mission_control"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f4"
+                    },
+                    "to": {
+                        "key_code": "launchpad"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f5"
+                    },
+                    "to": {
+                        "key_code": "illumination_decrement"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f6"
+                    },
+                    "to": {
+                        "key_code": "illumination_increment"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f7"
+                    },
+                    "to": {
+                        "consumer_key_code": "rewind"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f8"
+                    },
+                    "to": {
+                        "consumer_key_code": "play_or_pause"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f9"
+                    },
+                    "to": {
+                        "consumer_key_code": "fastforward"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f10"
+                    },
+                    "to": {
+                        "consumer_key_code": "mute"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f11"
+                    },
+                    "to": {
+                        "consumer_key_code": "volume_decrement"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f12"
+                    },
+                    "to": {
+                        "consumer_key_code": "volume_increment"
+                    }
+                }
+            ],
+            "name": "no remap",
+            "selected": false,
             "simple_modifications": [],
             "virtual_hid_keyboard": {
                 "caps_lock_delay_milliseconds": 0,

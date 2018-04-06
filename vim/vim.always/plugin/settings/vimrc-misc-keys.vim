@@ -31,11 +31,12 @@ imap <silent> <D-d> _
 imap <silent> <D-K> -
 imap <silent> <D-D> -
 
+
 " ========================================
 " misc
 " ========================================
 " gary bernhardt's hashrocket
-imap <c-l> <space>=><space>
+" imap <c-l> <space>=><space>
 
 " Semicolon at end of line by typing ;;
 inoremap ;; <C-o>A;<esc>
@@ -80,6 +81,11 @@ nmap <silent> \\ :nohlsearch<CR>
 
 " Spelling related stuff
 nnoremap <leader>s :set spell!<CR>
+
+" Copy current file name into clipboard
+nmap ,cs :let @*=expand("%")<CR>
+" Copy current file path into clipboard
+nmap ,cl :let @*=expand("%:p")<CR>
 
 " Git commits.
 autocmd FileType gitcommit setlocal spell
