@@ -31,9 +31,8 @@
                                 "from": {
                                     "key_code": "page_down",
                                     "modifiers": {
-                                        "mandatory": [
-                                            "control"
-                                        ]
+                                        "mandatory": [ "control" ],
+                                        "optional": ["any"]
                                     }
                                 },
                                 "to": [
@@ -60,9 +59,8 @@
                                 "from": {
                                     "key_code": "page_up",
                                     "modifiers": {
-                                        "mandatory": [
-                                            "control"
-                                        ]
+                                        "mandatory": [ "control" ],
+                                        "optional": ["any"]
                                     }
                                 },
                                 "to": [

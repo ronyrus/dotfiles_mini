@@ -141,8 +141,10 @@ alias q="cd .."
 alias qq="cd ../.."
 alias qqq="cd ../../.."
 
-alias work="cd ~/Work"
-alias iwork="cd ~/Work/iphone"
+alias cdwork="cd ~/Work"
+alias cdtools="cd ~/Work/tools"
+alias cdiphone="cd ~/Work/iphone"
+alias cdse="cd ~/Work/iphone/projects/secure_element"
 alias devs="cd ~/Developer/sources/"
 
 alias ks='killall ssh'

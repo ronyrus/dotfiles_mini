@@ -3,3 +3,6 @@
 
 # Because who cares about case!?
 --smart-case
+
+# exclude some files
+-g !*ccscope*
