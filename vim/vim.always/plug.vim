@@ -42,6 +42,7 @@ Plug 'Raimondi/delimitMate'
 Plug 'easymotion/vim-easymotion'
 " Plug 'tpope/vim-commentary'
 Plug 'tomtom/tcomment_vim'
+Plug 'AndrewRadev/switch.vim'
 
 Plug 'Valloric/YouCompleteMe'
 

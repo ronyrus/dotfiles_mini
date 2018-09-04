@@ -141,19 +141,13 @@ alias q="cd .."
 alias qq="cd ../.."
 alias qqq="cd ../../.."
 
-alias cdwork="cd ~/Work"
-alias cdtools="cd ~/Work/tools"
-alias cdiphone="cd ~/Work/iphone"
-alias cdse="cd ~/Work/iphone/projects/secure_element"
-alias devs="cd ~/Developer/sources/"
+if [ -f ~/.bashrc.local ]; then
+  source ~/.bashrc.local
+fi
+
 
 alias ks='killall ssh'
 alias psg='ps -eflw | grep'
-# alias gr='grep --color -rnsi'
-
-# This is for MAC OS
-alias octave="/Applications/Octave.app/Contents/Resources/bin/octave"
-alias gnuplot="/Applications/Gnuplot.app/Contents/Resources/bin/gnuplot"
 
 alias gs='git status'
 alias ga='git add'
