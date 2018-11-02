@@ -16,7 +16,7 @@ HISTFILESIZE=2000
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
 
-export PATH=/usr/local/bin:$HOME/Work/ios_team/bin:$HOME/bin:$HOME/go/bin:$PATH
+export PATH=/usr/local/bin:/usr/local/sbin:$HOME/Work/ios_team/bin:$HOME/bin:$HOME/go/bin:$PATH:/Applications/010\ Editor.app/Contents/CmdLine
 export TERM=xterm-256color
 export EDITOR='gvim -f'
 export DIFFPROG="gvim -df +0 -s `echo ~/.vim/diftop.vim`"
