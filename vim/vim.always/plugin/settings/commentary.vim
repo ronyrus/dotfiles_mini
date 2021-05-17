@@ -1,1 +1,1 @@
-map <D-\> gcc<Esc>
+map <D-\> <leader>c<space><Esc>

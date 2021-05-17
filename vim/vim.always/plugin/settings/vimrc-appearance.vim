@@ -4,7 +4,8 @@ if has("gui_running")
   set t_Co=256
 
   " http://ethanschoonover.com/solarized/vim-colors-solarized
-  colorscheme solarized
+  colorscheme gruvbox
+  "colorscheme solarized
   " colorscheme railscasts
   "colorscheme peachpuff
   "colorscheme yella
