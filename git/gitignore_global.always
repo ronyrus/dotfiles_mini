@@ -32,4 +32,8 @@ Session.vim
 .sass-cache
 
 cscope.*
+.pyc
 *~
+__pycache__/
+.vscode
+*.code-workspace
