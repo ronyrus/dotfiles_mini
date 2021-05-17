@@ -16,13 +16,16 @@ HISTFILESIZE=2000
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
 
-export PATH=/usr/local/bin:/usr/local/sbin:$HOME/Work/ios_team/bin:$HOME/bin:$HOME/go/bin:$PATH:/Applications/010\ Editor.app/Contents/CmdLine
+export PATH=/usr/local/opt/make/libexec/gnubin:$HOME/Development/sources/fpga/fpga-toolchain/bin:/usr/local/bin:/usr/local/sbin:$HOME/Work/ios_team/bin:$HOME/Work/ios-tools/bin:$HOME/bin:$HOME/go/bin:$PATH
 export TERM=xterm-256color
 export EDITOR='gvim -f'
 export DIFFPROG="gvim -df +0 -s `echo ~/.vim/diftop.vim`"
 #export DIFFPROG='xxdiff'
 export PYTHONPATH=${PYTHONPATH}:$HOME/Work/ios_team/:$HOME/Work/
+export RIPGREP_CONFIG_PATH=$HOME/.ripgreprc
 
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
 
 # BeagleBone-Black specific stuff
 if [ -f /etc/dogtag ]; then
@@ -145,6 +148,8 @@ if [ -f ~/.bashrc.local ]; then
   source ~/.bashrc.local
 fi
 
+# Copy the PWD to the Clipboard
+alias cpwd="pwd | tr -d '\n' | pbcopy && echo 'pwd copied to clipboard'"
 
 alias ks='killall ssh'
 alias psg='ps -eflw | grep'
@@ -160,17 +165,35 @@ alias gl='git log'
 # alias gsth='git stash'
 alias gps='git push'
 alias gpl='git pull'
+alias gpff='git pull --ff-only'
 alias gist='git log --pretty=format:"%h %ad | %s%d [%an]" --graph --date=short'
 
-alias upmaster='git co master && git pull upstream master && git push origin master'
+alias upmaster='git checkout master && git pull --ff-only upstream master && git push origin master'
 
 
-alias usb_switch='ssh rpi ./usb_switch.sh'
-alias lsusb='system_profiler SPUSBDataType'
+#alias lsusb='system_profiler SPUSBDataType'
 
+alias minicom_last='ls -lhrt /dev/cu.usb* | tail -1 | awk "{print \$NF}" | xargs -o minicom -D'
+
+alias printcolors='for i in {0..255}; do printf "\x1b[38;5;${i}mcolor%-5i\x1b[0m" $i ; if ! (( ($i + 1 ) % 8 )); then echo ; fi ; done'
+
+alias fastdl='aria2c -x 16 -s 16 -k 2M --file-allocation=none'
+
+# alias gtkwave="open -a gtkwave"
+alias gtkwave="/Applications/gtkwave.app/Contents/Resources/bin/gtkwave"
 #
 # functions
 #------------
+copy()
+{
+    if [ 0 == $# ]; then
+        echo "$0 <string to copy>"
+        exit
+    fi
+
+    echo $1 | tr -d '\n' | pbcopy && echo "$1 was copied to clipboard"
+}
+
 ff()
 {
     if [ -z "$1" ]; then
@@ -181,7 +204,6 @@ ff()
 
 gr() { grep --color -rnsi $1 * ; }
 
-rgc () { /bin/grep --color=always -in -B1 $1 `jpwdroot`/build/rg_config.* ; }
 
 function figr()
 {
@@ -226,5 +248,62 @@ function figr()
 #  grep -rni --include=*.[chi] --include=*.mak --include=Makefile --color=always "$@" * | hil
 }
 
+alias itunes_kill="kill -STOP $(pgrep AMPDeviceDiscoveryAgent)"
+
+# stolen blatantly from some apple employee's github :)
+itunes_annoyance() {
+     if [ "$1" == "ON" ]; then
+         sudo defaults write com.apple.iTunes disableAMDSInstall -bool true
+         sudo defaults write com.apple.iTunes dontAutomaticallySyncIPods -bool true
+         sudo defaults write com.apple.MobileDevice Blacklist -array-add com.apple.Xcode com.apple.dt.Xcode com.apple.iTunesHelper
+         sudo defaults write com.apple.usbmuxd BlackList -array-add com.apple.Xcode com.apple.dt.Xcode com.apple.iTunesHelper
+         sudo defaults write /Library/Preferences/com.apple.usbmuxd BlackList -array-add com.apple.iTunes
+
+         # Quit iTunesHelper
+         killall iTunesHelper
+         # Remove iTunesHelper from your user account's Login Items (if present)
+         osascript -e 'tell application "System Events" to if exists login item "iTunesHelper" then delete login item "iTunesHelper"'
+
+         # Quit Image Capture (if running)
+         killall "Image Capture"
+         # Stop Image Capture from auto-launching
+         defaults -currentHost write com.apple.ImageCapture disableHotPlug -bool YES
+
+     elif [ "$1" == "OFF" ] ; then
+         # This script is meant to be the inverse of stop-itunes-from-being-annoying.sh
+
+         sudo defaults write com.apple.iTunes disableAMDSInstall -bool false
+         sudo defaults write com.apple.iTunes dontAutomaticallySyncIPods -bool false
+         sudo defaults delete com.apple.MobileDevice Blacklist
+         sudo defaults delete com.apple.usbmuxd BlackList
+         sudo defaults delete /Library/Preferences/com.apple.usbmuxd BlackList
+
+         # Launch iTunesHelper
+         open /Applications/iTunes.app/Contents/MacOS/iTunesHelper.app
+
+         # Add iTunesHelper from your user account's Login Items (if not present)
+         osascript -e 'tell application "System Events" to make login item at end with properties {path:"/Applications/iTunes.app/Contents/MacOS/iTunesHelper.app", hidden:false}'
+
+         # Start Image Capture auto-launching
+         defaults -currentHost write com.apple.ImageCapture disableHotPlug -bool NO
+     else
+       echo "Use ON/OFF"
+   fi
+}
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
+
+
+export GPG_TTY="$(tty)"
+export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+gpgconf --launch gpg-agent
+
+PATH="/Users/ronyk/perl5/bin${PATH:+:${PATH}}"; export PATH;
+PERL5LIB="/Users/ronyk/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+PERL_LOCAL_LIB_ROOT="/Users/ronyk/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+PERL_MB_OPT="--install_base \"/Users/ronyk/perl5\""; export PERL_MB_OPT;
+PERL_MM_OPT="INSTALL_BASE=/Users/ronyk/perl5"; export PERL_MM_OPT;
+
+# pyenv init
+eval "$(pyenv init -)"
