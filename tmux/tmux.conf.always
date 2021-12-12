@@ -31,7 +31,8 @@ set-option -sg  escape-time 0
 ################################################################################
 
 # MAC copy-past problem (for some Mac OS X version it just works
-if-shell "echo $(uname) | grep -q Darwin" 'set-option -g default-command "reattach-to-user-namespace -l bash"'
+# if-shell "echo $(uname) | grep -q Darwin" 'set-option -g default-command "reattach-to-user-namespace -l bash"'
+if-shell "echo $(uname) | grep -q Darwin" 'set-option -g default-command "reattach-to-user-namespace -l zsh"'
 
 # Use vim keybindings in copy mode
 set -g mode-keys vi
