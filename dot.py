@@ -16,22 +16,30 @@ home_dir = os.path.expanduser('~')
 base_dir = os.path.dirname(os.path.abspath(__file__))
 dev_null = open(os.devnull, 'w')
 
+
 def is_mac():
     return 'Darwin' in system_str
 
+
 def is_linux():
     return 'Linux' in system_str
+
 
 def is_bash():
     env_sh = os.environ["SHELL"]
     return env_sh != "" and env_sh.endswith("bash")
 
+
 def plat_suffix():
-    if is_linux(): return 'lin'
-    elif is_mac(): return 'mac'
+    if is_linux():
+        return 'lin'
+    elif is_mac():
+        return 'mac'
+
 
 logging.basicConfig(level='WARN')
 log = logging.getLogger("DotManager")
+
 
 class DotManager(CommandLineApp):
     """ Dot files manager """
@@ -53,10 +61,10 @@ class DotManager(CommandLineApp):
     def link(self, lst, module):
         """ Link dot files into repository """
         log.info('linking dotfiles...')
-        modules = ['git', 'tmux', 'nix', 'bash', 'vim', 'gdb', 'misc']
+        modules = ['git', 'tmux', 'nix', 'bash', 'zsh', 'vim', 'gdb', 'misc']
 
         if lst:
-            print modules
+            print(modules)
             return
 
         if module:
