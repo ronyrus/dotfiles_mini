@@ -72,8 +72,8 @@ set -g xterm-keys on
 
 bind-key r source-file ~/.tmux.conf\; display "Reloaded!"
 
-bind-key -n M-c   command-prompt -p "tmux:"
-bind-key -n M-m   command-prompt -p "Man:" "split-window 'man %%'"
+# bind-key -n M-c   command-prompt -p "tmux:"
+# bind-key -n M-m   command-prompt -p "Man:" "split-window 'man %%'"
 
 # PageUp enters copy-mode and scrolls one page
 unbind-key -n ppage
